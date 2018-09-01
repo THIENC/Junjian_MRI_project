@@ -1,4 +1,5 @@
 [P,cmap] = dicomread('STN_T2_Axial.dcm');
+edge(P,'Canny')
 P=double(P);
 imtool(P)
 imshow(P)
@@ -9,6 +10,8 @@ imagesc(P)
 nrows = size(P,1);
 ncols = size(P,2);
 ab = reshape(P,nrows*ncols,1);
+figure
+histogram(ab)
 
 [cluster_idx, cluster_center] = kmeans(ab,4);
 
