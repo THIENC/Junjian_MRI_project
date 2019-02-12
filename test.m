@@ -7,7 +7,7 @@
 % SamplesSmooth = Gaussian_Smooth(SamplesNorm);
 % plot(SamplesSmooth)
 
-SamplesSmooth = Gaussian_Smooth_Interpolate( VarName5 )
+SamplesSmooth = Gaussian_Smooth_Interpolate( VarName5 );
 subplot 211
 plot(VarName5/max(VarName5))
 subplot 212
