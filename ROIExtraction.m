@@ -1,17 +1,19 @@
 % Import raw data and masks sepertately and cao
 
-Data = niftiread('6 t2_fl2d_tra_2.5mm_BW40.nii');
-mask = niftiread('6 t2_fl2d_tra_2.5mm_BW40-label.nii');
-Contrast = niftiread('6 t2_fl2d_tra_2.5mm_BW40-label_1.nii');
-BackgroundNoise
+Data = niftiread('S01.SWI_Images.nii');
+STNMask = niftiread('S01.L.STN.SWI_Images-label.nii');
+ContrastMask = niftiread('S01.L.Con.SWI_Images-label_1.nii');
+BackgroundNoiseMask = niftiread('S01.L.Out.SWI_Images-label_2.nii');
 
 
-Results = single(Data) .* single(mask); 
-ResultsContrast = single(Data) .* single(Contrast);
+Results = single(Data) .* single(STNMask); 
+ResultsContrast = single(Data) .* single(ContrastMask);
+Background = single(Data) .* single(BackgroundNoiseMask);
 
+meanSTN = sum(sum(sum(Results)))/sum(sum(sum(STNMask)))
+meanContrast = sum(sum(sum(ResultsContrast)))/sum(sum(sum(ContrastMask)))
+stdBackground = single(Data) .* single(BackgroundNoiseMask);
 
-meanSTN = sum(sum(sum(Results)))/sum(sum(sum(mask)))
-meanContrast = sum(sum(sum(ResultsContrast)))/sum(sum(sum(Contrast)))
 
 imtool(squeeze(Data(:,:,30)))
 
