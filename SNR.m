@@ -2,7 +2,8 @@ clc;clear;
 % Import raw data and masks sepertately
 MainDir = '/Users/Baotian/Documents/GitHub/Junjian_MRI_project/S';
 cd(MainDir)
-Subjects = dir('S*');
+Subjects = dir(pwd);
+Subjects = Subjects(3:end);
 for i = 1:length(Subjects)
     cd(Subjects(i).name)
     Sequence = dir(pwd);
