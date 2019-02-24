@@ -31,6 +31,9 @@ for i = 1:length(Subjects)
         OutBrainInd    = find(OutBrainData);
         STDOutBrain = nanstd(OutBrainData(OutBrainInd));
         CNR_L = abs(meanSTN)/STDOutBrain;
+        AdjustFactor = niftiinfo(DataFile.name);
+        AdjustFactor = prod(AdjustFactor.PixelDimensions,'all');
+        CNR_L = CNR_L/AdjustFactor;
         cd ..
         cd('R')  % Right side
         % Screening the file names
@@ -53,6 +56,7 @@ for i = 1:length(Subjects)
         OutBrainInd    = find(OutBrainData);
         STDOutBrain = nanstd(OutBrainData(OutBrainInd));
         CNR_R = abs(meanSTN)/STDOutBrain;
+        CNR_R = CNR_R/AdjustFactor;
         eval(strcat('CNR_L_All','(',num2str(i),')','.',Sequence(j).name,'=','CNR_L'))
         eval(strcat('CNR_R_All','(',num2str(i),')','.',Sequence(j).name,'=','CNR_R'))
         cd ..
@@ -65,12 +69,12 @@ end
 
 % For the left side
 LeftCNRTable = struct2table(CNR_L_All);
-LeftCNRFileName = 'LeftSNR.xlsx';
+LeftCNRFileName = 'LeftSNR_Adjusted.xlsx';
 writetable(LeftCNRTable,LeftCNRFileName)
 
 % For the right side
 RightCNRTable = struct2table(CNR_R_All);
-RightCNRFileName = 'RightSNR.xlsx';
+RightCNRFileName = 'RightSNR_Adjusted.xlsx';
 writetable(RightCNRTable,RightCNRFileName)
 
 % For both side
@@ -79,7 +83,11 @@ BothCNRMatrix(2,:,:) = table2array(RightCNRTable);
 BothCNRMean = squeeze(mean(BothCNRMatrix));
 BothCNRTable = RightCNRTable;
 BothCNRTable{:,:} = BothCNRMean;
-BothCNRFileName = 'BothSNR.xlsx';
+BothCNRFileName = 'BothSNR_Adjusted.xlsx';
 writetable(BothCNRTable,BothCNRFileName)
+
+
+
+
 
 

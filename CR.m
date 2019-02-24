@@ -30,7 +30,7 @@ for i = 1:length(Subjects)
         meanContrast   = sum(sum(sum(ContrastData)))/sum(sum(sum(ContrastMask)));
         OutBrainInd    = find(OutBrainData);
         STDOutBrain = nanstd(OutBrainData(OutBrainInd));
-        CNR_L = abs(meanSTN)/STDOutBrain;
+        CNR_L = abs((meanSTN - meanContrast))/abs(meanSTN);
         cd ..
         cd('R')  % Right side
         % Screening the file names
@@ -52,7 +52,7 @@ for i = 1:length(Subjects)
         meanContrast   = sum(sum(sum(ContrastData)))/sum(sum(sum(ContrastMask)));
         OutBrainInd    = find(OutBrainData);
         STDOutBrain = nanstd(OutBrainData(OutBrainInd));
-        CNR_R = abs(meanSTN)/STDOutBrain;
+        CNR_R = abs((meanSTN - meanContrast))/abs(meanSTN);
         eval(strcat('CNR_L_All','(',num2str(i),')','.',Sequence(j).name,'=','CNR_L'))
         eval(strcat('CNR_R_All','(',num2str(i),')','.',Sequence(j).name,'=','CNR_R'))
         cd ..
@@ -65,12 +65,12 @@ end
 
 % For the left side
 LeftCNRTable = struct2table(CNR_L_All);
-LeftCNRFileName = 'LeftSNR.xlsx';
+LeftCNRFileName = 'LeftCR.xlsx';
 writetable(LeftCNRTable,LeftCNRFileName)
 
 % For the right side
 RightCNRTable = struct2table(CNR_R_All);
-RightCNRFileName = 'RightSNR.xlsx';
+RightCNRFileName = 'RightCR.xlsx';
 writetable(RightCNRTable,RightCNRFileName)
 
 % For both side
@@ -79,7 +79,7 @@ BothCNRMatrix(2,:,:) = table2array(RightCNRTable);
 BothCNRMean = squeeze(mean(BothCNRMatrix));
 BothCNRTable = RightCNRTable;
 BothCNRTable{:,:} = BothCNRMean;
-BothCNRFileName = 'BothSNR.xlsx';
+BothCNRFileName = 'BothCR.xlsx';
 writetable(BothCNRTable,BothCNRFileName)
 
 
