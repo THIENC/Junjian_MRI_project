@@ -104,12 +104,13 @@ figure
 plot(mean(MAG))
 hold on 
 plot(mean(MIP))
-plot(mean(SPACE))
+
 plot(mean(SWI))
 plot(mean(T2))
 plot(mean(T2FLAIR))
 plot(mean(T2FLASH2D))
 plot(mean(T2FLASH2DHB))
+plot(mean(T2SPACE))
 
 axis tight
 % 
