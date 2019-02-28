@@ -77,13 +77,13 @@ for i = 1:8
         % Calculate the values adjust to base line
         Adjust(j,:) = CurrentSequence(j,:) - (a*Xaxis + b);
         
-        %     figure
-        %     plot(MAG(i,:))
-        %     hold on
-        %     axis tight
-        %     Xaxis = 1:100;
-        %     plot(a*Xaxis + b)
-        %     plot(Adjust(i,:))
+%             figure
+%             plot(MAG(i,:))
+%             hold on
+%             axis tight
+%             Xaxis = 1:100;
+%             plot(a*Xaxis + b)
+%             plot(Adjust(i,:))
         
         % Compute area between positive y data and x axis:
         % positiveArea = sum(y(y>0));
@@ -113,6 +113,7 @@ plot(mean(T2FLASH2DHB))
 plot(mean(T2SPACE))
 
 axis tight
+legend
 % 
 % % For each trial
 % figure
